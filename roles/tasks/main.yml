@@ -1,0 +1,31 @@
+---
+- name: Instalacion de git
+  package:
+    name: "git"
+    state: present
+
+- name: Chekear si el repositorio existe
+  git:
+    repo: "{{ app_repo }}"
+    dest: /opt/{{ app_name }}
+    update: false
+
+- name: Obtener ultimos cambios de {{ app_repo }}
+  git:
+    repo: "{{ app_repo }}"
+    dest: /opt/{{ app_name }}
+    update: true
+    clone: false
+
+- name: configure dependencies
+  package:
+    name: 
+     - python3-requests
+    state: present
+
+- name: Create a network
+  community.docker.docker_network:
+    name: custom-network
+
+- name: deploy
+  include_tasks: deploy.yml

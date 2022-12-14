@@ -1,0 +1,21 @@
+---
+app_repo: https://github.com/carloscubilla/simple-web-server.git
+app_name: simple-web-server
+
+app_image: webserver
+app_version: 1
+
+lb_image: haproxy
+lb_version: 1
+
+web_containers:
+  - name: web1
+    image: webserver
+    version: "{{ app_version }}"
+  - name: web2
+    image: webserver
+    version: "{{ app_version }}"
+
+lb_container_name: lb1
+lb_container_image: haproxy
+lb_container_version: "{{ lb_version }}"
